@@ -28,7 +28,6 @@
             "Kmedia\\ReCaptcha\\": "src/"
         }
     },
-    ,
     "extra": {
         "installer-name": "recaptcha",
         "expose": [
