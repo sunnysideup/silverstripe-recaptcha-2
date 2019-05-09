@@ -5,3 +5,4 @@ SilverStripe\Core\Injector\Injector:
   Kmedia\ReCaptcha\ReCaptchaField:
     properties:
       SiteKey: '`SS_RECAPTCHA_SITE_KEY`'
+      SecretKey: '`SS_RECAPTCHA_SECRET_KEY`'
