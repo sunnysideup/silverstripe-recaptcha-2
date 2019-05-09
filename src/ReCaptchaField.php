@@ -55,5 +55,7 @@ class ReCaptchaField extends FormField
     {
         var_dump($this->siteKey);
         var_dump($this->secretKey);
+
+        return parent::Field($properties);
     }
 }
