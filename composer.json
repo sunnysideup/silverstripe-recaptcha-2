@@ -1,6 +1,6 @@
 {
     "name": "kmedia/silverstripe-recaptcha",
-    "description": "A spam protector extension used by Google's reCAPTCHA 2",
+    "description": "A spam protector extension using Google's reCAPTCHA 2",
     "type": "silverstripe-vendormodule",
     "keywords": [
         "silverstripe",
