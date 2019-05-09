@@ -20,7 +20,7 @@ class ReCaptchaField extends FormField
      * Getter for siteKey
      * @return string
      */
-    public function getSiteKey(): string
+    public function getSiteKey()
     {
         return $this->siteKey;
     }
@@ -28,7 +28,7 @@ class ReCaptchaField extends FormField
     /**
      * Setter for siteKey to allow injector config to override the value
      */
-    public function setSiteKey(string $siteKey)
+    public function setSiteKey($siteKey)
     {
         $this->siteKey = $siteKey;
     }
@@ -37,7 +37,7 @@ class ReCaptchaField extends FormField
      * Getter for secretKey
      * @return string
      */
-    public function getSecretKey(): string
+    public function getSecretKey()
     {
         return $this->secretKey;
     }
@@ -46,7 +46,7 @@ class ReCaptchaField extends FormField
      * Setter for secretKey to allow injector config to override the value
      * @param string $secretKey
      */
-    public function setSecretKey(string $secretKey)
+    public function setSecretKey($secretKey)
     {
         $this->secretKey = $secretKey;
     }
