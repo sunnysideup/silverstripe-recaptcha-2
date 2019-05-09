@@ -1,33 +1,59 @@
 <?php
-
-
 namespace Kmedia\ReCaptcha;
 
-
 use SilverStripe\Forms\FormField;
+
 
 class ReCaptchaField extends FormField
 {
     /**
-     * Recaptcha Site Key
-     * @config ReCaptchaField.siteKey
+     * Recaptcha Site Key - Configurable via Injector config
      */
-    private static $siteKey;
+    protected $siteKey;
 
     /**
-     * Recaptcha Secret Key
-     * @config ReCaptchaField.secretKey
+     * Recaptcha Secret Key - Configurable via Injector config
      */
-    private static $secretKey;
+    protected $secretKey;
 
     /**
-     * Creates a new ReCaptcha 2 field
-     * @param string $name The internal field name, passed to forms.
-     * @param null|string $title The human-readable field label.
-     * @param mixed $value The value of the field.
+     * Getter for siteKey
+     * @return string
      */
-    public function __construct($name, $title = null, $value = null)
+    public function getSiteKey(): string
     {
-        parent::__construct($name, $title, $value);
+        return $this->siteKey;
+    }
+
+    /**
+     * Setter for siteKey to allow injector config to override the value
+     */
+    public function setSiteKey(string $siteKey)
+    {
+        $this->siteKey = $siteKey;
+    }
+
+    /**
+     * Getter for secretKey
+     * @return string
+     */
+    public function getSecretKey(): string
+    {
+        return $this->secretKey;
+    }
+
+    /**
+     * Setter for secretKey to allow injector config to override the value
+     * @param string $secretKey
+     */
+    public function setSecretKey(string $secretKey)
+    {
+        $this->secretKey = $secretKey;
+    }
+
+    public function Field($properties = array())
+    {
+        var_dump($this->siteKey);
+        var_dump($this->secretKey);
     }
 }
