@@ -30,6 +30,11 @@
         "psr-4": {
             "Kmedia\\ReCaptcha\\": "src/"
         }
+    },
+    "extra": {
+        "expose": [
+            "javascript"
+        ]
     }
 }
 
