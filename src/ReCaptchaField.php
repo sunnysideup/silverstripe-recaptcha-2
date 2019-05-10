@@ -122,7 +122,7 @@ class ReCaptchaField extends FormField
         Requirements::customScript(
             "!function(){"
             . "var t=document.createElement('script'),e=document.querySelectorAll('script')[0],c='https:'==document.location.protocol?'https':'http';t.type='text/javascript',t.async=!0,t.defer=!0,"
-            . "t.src=c+'://www.google.com/recaptcha/api.js?hl=" . Locale::getPrimaryLanguage(i18n::get_locale()) . "',"
+            . "t.src=c+'://www.google.com/recaptcha/api.js?render=explicit&hl=" . Locale::getPrimaryLanguage(i18n::get_locale()) . "',"
             . "e.parentNode.insertBefore(t,e)"
             . "}();"
         );
