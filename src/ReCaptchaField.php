@@ -22,6 +22,30 @@ class ReCaptchaField extends FormField
     protected $secretKey;
 
     /**
+     * Captcha theme, currently options are light and dark
+     * @config ReCaptchaField.theme
+     * @default light
+     * @var string
+     */
+    private static $theme = 'light';
+
+    /**
+     * Captcha size, currently options are normal, compact and invisible
+     * @config ReCaptchaField.size
+     * @default normal
+     * @var string
+     */
+    private static $size = 'normal';
+
+    /**
+     * Captcha badge, currently options are bottomright, bottomleft and inline
+     * @config ReCaptchaField.size
+     * @default bottomright
+     * @var string
+     */
+    private static $badge = 'bottomright';
+
+    /**
      * Getter for siteKey
      * @return string
      */
@@ -57,6 +81,33 @@ class ReCaptchaField extends FormField
     }
 
     /**
+     * Getter for theme
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->config()->theme;
+    }
+
+    /**
+     * Getter for size
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->config()->size;
+    }
+
+    /**
+     * Getter for badge
+     * @return string
+     */
+    public function getBadge()
+    {
+        return $this->config()->badge;
+    }
+
+    /**
      * Adds the requirements and returns the form field.
      * @param array $properties
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
@@ -67,6 +118,7 @@ class ReCaptchaField extends FormField
             user_error('You must set SS_RECAPTCHA_SITE_KEY and SS_RECAPTCHA_SECRET_KEY environment.', E_USER_ERROR);
         }
 
+        Requirements::javascript('kmedia/silverstripe-recaptcha:javascript/ReCaptchaField.js');
         Requirements::customScript(
             "!function(){"
             . "var t=document.createElement('script'),e=document.querySelectorAll('script')[0],c='https:'==document.location.protocol?'https':'http';t.type='text/javascript',t.async=!0,t.defer=!0,"
