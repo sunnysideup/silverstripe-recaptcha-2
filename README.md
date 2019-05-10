@@ -15,7 +15,7 @@ Best installed via composer. You may clone the repo or download the zip, however
 composer require kmedia/silverstripe-recaptcha
 ```
 
-After installing the module via composer or manual install you must set the spam protector to NocaptchaProtector, this needs to be set in your site's config file normally this is `app/_config/config.yml`.
+After installing the module via composer or manual install you must set the spam protector to NocaptchaProtector, this needs to be set in your site's config file normally this is `app/_config/mysite.yml`.
 ```yml
 SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
     default_spam_protector: Kmedia\ReCaptcha\ReCaptchaProtector
@@ -24,7 +24,7 @@ SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
 Finally, add the "spam protection" field to your form fields.
 
 ### Configuration
-You have to create your `sitekey` and `secretkey` in the environments (`.env`) file, which you can get from the [reCAPTCHA page](https://www.google.com/recaptcha). These configuration options must be added to your site's yaml config typically this is `app/_config/config.yml`.
+You have to create your `sitekey` and `secretkey` in the environments (`.env`) file, which you can get from the [reCAPTCHA page](https://www.google.com/recaptcha). These configuration options must be added to your site's yaml config typically this is `app/_config/mysite.yml`.
 ```yml
 Kmedia\ReCaptcha\ReCaptchaField:
   theme: "light" #Default theme color (optional, light or dark, defaults to light)
