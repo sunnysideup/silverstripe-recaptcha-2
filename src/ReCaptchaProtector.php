@@ -23,5 +23,6 @@ class ReCaptchaProtector implements SpamProtector
      */
     public function setFieldMapping($fieldMapping)
     {
+        // ...
     }
 }
