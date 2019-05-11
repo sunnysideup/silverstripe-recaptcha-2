@@ -1,4 +1,5 @@
 # Silverstripe reCAPTCHA FormField Module
+[![license - bsd 3 clause](https://img.shields.io/:license-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 ## Introduction
 Provides a FormField which allows form to validate for non-bot submissions
