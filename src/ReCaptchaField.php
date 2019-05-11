@@ -106,6 +106,15 @@ class ReCaptchaField extends FormField
     }
 
     /**
+     * Getter for the form's id
+     * @return string
+     */
+    public function getFormID()
+    {
+        return $this->form ? $this->getTemplateHelper()->generateFormID($this->form) : null;
+    }
+
+    /**
      * Adds the requirements and returns the form field.
      * @param array $properties
      * @return \SilverStripe\ORM\FieldType\DBHTMLText
@@ -116,14 +125,8 @@ class ReCaptchaField extends FormField
             user_error('You must set SS_RECAPTCHA_SITE_KEY and SS_RECAPTCHA_SECRET_KEY environment.', E_USER_ERROR);
         }
 
+        Requirements::customScript("var SS_LOCALE='" . Locale::getPrimaryLanguage(i18n::get_locale()) . "',ReCaptchaFormId='" . $this->getFormID() . "';");
         Requirements::javascript('kmedia/silverstripe-recaptcha:javascript/ReCaptchaField.js');
-        Requirements::customScript(
-            "!function(){"
-            . "var t=document.createElement('script'),e=document.querySelectorAll('script')[0],c='https:'==document.location.protocol?'https':'http';t.type='text/javascript',t.async=!0,t.defer=!0,"
-            . "t.src=c+'://www.google.com/recaptcha/api.js?onload=reCaptchaOnloadCallback&render=explicit&hl=" . Locale::getPrimaryLanguage(i18n::get_locale()) . "',"
-            . "e.parentNode.insertBefore(t,e)"
-            . "}();"
-        );
 
         return parent::Field($properties);
     }
