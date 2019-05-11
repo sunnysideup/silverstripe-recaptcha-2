@@ -24,7 +24,7 @@ SilverStripe\SpamProtection\Extension\FormSpamProtectionExtension:
 
 Finally, add the "spam protection" field to your form fields.
 
-### Configuration
+## Configuration
 You have to create your `sitekey` and `secretkey` in the environments (`.env`) file, which you can get from the [reCAPTCHA page](https://www.google.com/recaptcha). These configuration options must be added to your site's yaml config typically this is `app/_config/mysite.yml`.
 ```yml
 Kmedia\ReCaptcha\ReCaptchaField:
@@ -33,7 +33,7 @@ Kmedia\ReCaptcha\ReCaptchaField:
   badge: "bottomright" #Default badge position (bottomright, bottomleft or inline, defaults to bottomright)
 ```
 
-### Adding field labels
+## Adding field labels
 If you want to add a field label or help text to the Captcha field you can do so like this:
 ```php
 $form->enableSpamProtection()
