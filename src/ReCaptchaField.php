@@ -137,7 +137,8 @@ class ReCaptchaField extends FormField
         if (empty($recaptchaResponse)) {
             $validator->validationError(
                 $this->name,
-                _t('Kmedia\\ReCaptcha.EMPTY', 'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
+                _t('Kmedia\\ReCaptcha.EMPTY',
+                    'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
                 'validation'
             );
             return false;
@@ -162,7 +163,8 @@ class ReCaptchaField extends FormField
             if (array_key_exists('success', $response) && $response['success'] == false) {
                 $validator->validationError(
                     $this->name,
-                    _t('Kmedia\\ReCaptcha.EMPTY', 'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
+                    _t('Kmedia\\ReCaptcha.EMPTY',
+                        'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
                     'validation'
                 );
                 return false;
