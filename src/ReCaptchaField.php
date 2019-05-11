@@ -1,5 +1,4 @@
 <?php
-
 namespace Kmedia\ReCaptcha;
 
 use Locale;
@@ -7,7 +6,6 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FormField;
 use SilverStripe\i18n\i18n;
 use SilverStripe\View\Requirements;
-
 
 class ReCaptchaField extends FormField
 {
