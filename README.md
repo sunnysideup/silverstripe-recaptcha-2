@@ -12,7 +12,7 @@ using Google's [reCAPTCHA v2](https://developers.google.com/recaptcha/docs/displ
 Best installed via composer. You may clone the repo or download the zip, however you should find a directory called `recaptcha` with all files in your silverstripe root folder.
 
 ### Using Composer
-```
+```bash
 composer require kmedia/silverstripe-recaptcha
 ```
 
