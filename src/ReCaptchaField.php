@@ -1,24 +1,16 @@
 <?php
+
 namespace Kmedia\ReCaptcha;
 
 use Locale;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FormField;
 use SilverStripe\i18n\i18n;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
 
 class ReCaptchaField extends FormField
 {
-    /**
-     * Recaptcha Site Key - Configurable via Injector config
-     */
-    protected $siteKey;
-
-    /**
-     * Recaptcha Secret Key - Configurable via Injector config
-     */
-    protected $secretKey;
-
     /**
      * Captcha theme, currently options are light and dark
      * @config ReCaptchaField.theme
@@ -26,7 +18,6 @@ class ReCaptchaField extends FormField
      * @var string
      */
     private static $theme = 'light';
-
     /**
      * Captcha size, currently options are normal, compact and invisible
      * @config ReCaptchaField.size
@@ -34,7 +25,6 @@ class ReCaptchaField extends FormField
      * @var string
      */
     private static $size = 'normal';
-
     /**
      * Captcha badge, currently options are bottomright, bottomleft and inline
      * @config ReCaptchaField.size
@@ -42,6 +32,14 @@ class ReCaptchaField extends FormField
      * @var string
      */
     private static $badge = 'bottomright';
+    /**
+     * Recaptcha Site Key - Configurable via Injector config
+     */
+    protected $siteKey;
+    /**
+     * Recaptcha Secret Key - Configurable via Injector config
+     */
+    protected $secretKey;
 
     /**
      * Getter for siteKey
@@ -106,18 +104,9 @@ class ReCaptchaField extends FormField
     }
 
     /**
-     * Getter for the form's id
-     * @return string
-     */
-    public function getFormID()
-    {
-        return $this->form ? $this->getTemplateHelper()->generateFormID($this->form) : null;
-    }
-
-    /**
      * Adds the requirements and returns the form field.
      * @param array $properties
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText
+     * @return DBHTMLText
      */
     public function Field($properties = array())
     {
@@ -130,6 +119,15 @@ class ReCaptchaField extends FormField
         Requirements::javascript('kmedia/silverstripe-recaptcha:javascript/ReCaptchaField.js');
 
         return parent::Field($properties);
+    }
+
+    /**
+     * Getter for the form's id
+     * @return string
+     */
+    public function getFormID()
+    {
+        return $this->form ? $this->getTemplateHelper()->generateFormID($this->form) : null;
     }
 
     public function validate($validator)

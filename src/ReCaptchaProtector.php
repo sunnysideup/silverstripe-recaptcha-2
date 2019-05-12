@@ -1,4 +1,5 @@
 <?php
+
 namespace Kmedia\ReCaptcha;
 
 use SilverStripe\SpamProtection\SpamProtector;
