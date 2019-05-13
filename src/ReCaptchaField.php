@@ -133,30 +133,9 @@ class ReCaptchaField extends FormField
     public function validate($validator)
     {
         $recaptchaResponse = Controller::curr()->getRequest()->requestVar('g-recaptcha-response');
-        $response = json_decode($this->siteVerify($recaptchaResponse), true);
+        $response = json_decode((string)$this->siteVerify($recaptchaResponse), true);
 
         return $this->verify($response, $validator);
-    }
-
-    private function verify($response, $validator)
-    {
-        if (is_array($response)) {
-            if (array_key_exists('success', $response) && $response['success'] == false) {
-                $validator->validationError(
-                    $this->name,
-                    _t('Kmedia\\ReCaptcha.EMPTY',
-                        'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
-                    'validation'
-                );
-                return false;
-            }
-        } else {
-            $validator->validationError($this->name,
-                _t('Kmedia\\ReCaptcha.VALIDATE_ERROR', 'Captcha could not be validated.'),
-                'validation');
-            return false;
-        }
-        return true;
     }
 
     private function siteVerify($token)
@@ -187,6 +166,27 @@ class ReCaptchaField extends FormField
         }
 
         curl_close($ch);
-        return (string)$result;
+        return $result;
+    }
+
+    private function verify($response, $validator)
+    {
+        if (is_array($response)) {
+            if (array_key_exists('success', $response) && $response['success'] == false) {
+                $validator->validationError(
+                    $this->name,
+                    _t('Kmedia\\ReCaptcha.EMPTY',
+                        'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
+                    'validation'
+                );
+                return false;
+            }
+        } else {
+            $validator->validationError($this->name,
+                _t('Kmedia\\ReCaptcha.VALIDATE_ERROR', 'Captcha could not be validated.'),
+                'validation');
+            return false;
+        }
+        return true;
     }
 }
