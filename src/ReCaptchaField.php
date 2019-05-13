@@ -174,7 +174,7 @@ class ReCaptchaField extends FormField
 
         curl_close($ch);
 
-        $response = json_decode($result, true);
+        $response = json_decode((string)$result, true);
         if (is_array($response)) {
             if (array_key_exists('success', $response) && $response['success'] == false) {
                 $validator->validationError(
