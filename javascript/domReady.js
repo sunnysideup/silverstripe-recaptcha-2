@@ -1,57 +1,26 @@
+'use strict';
+
 function domReady(fn) {
-    'use strict';
+    var fns = [],
+        listener,
+        doc = typeof document === 'object' && document,
+        hack = doc && doc.documentElement.doScroll,
+        domContentLoaded = 'DOMContentLoaded',
+        loaded = doc && (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
-    var ready = false;
-
-    function detach() {
-        if (document.addEventListener) {
-            document.removeEventListener('DOMContentLoaded', completed);
-            window.removeEventListener('load', completed);
-        } else {
-            document.detachEvent('onreadystatechange', completed);
-            window.detachEvent('onload', completed);
-        }
+    if (!loaded && doc) {
+        doc.addEventListener(domContentLoaded, listener = function () {
+            doc.removeEventListener(domContentLoaded, listener);
+            loaded = 1;
+            while (listener = fns.shift()) {
+                listener();
+            }
+        })
     }
 
-    function completed() {
-        if (!ready && (document.addEventListener || event.type === 'load' || document.readyState === 'complete')) {
-            ready = true;
-            detach();
-            fn();
-        }
-    }
-
-    if (document.readyState === 'complete') {
-        fn();
-    } else if (document.addEventListener) {
-        document.addEventListener('DOMContentLoaded', completed);
-        window.addEventListener('load', completed);
+    if (loaded) {
+        setTimeout(fn, 0);
     } else {
-        document.attachEvent('onreadystatechange', completed);
-        window.attachEvent('onload', completed);
-
-        var top = false;
-
-        try {
-            top = window.frameElement == null && document.documentElement;
-        } catch (e) {}
-
-        if (top && top.doScroll) {
-            (function scrollCheck() {
-                if (ready) {
-                    return;
-                }
-
-                try {
-                    top.doScroll('left');
-                } catch (e) {
-                    return setTimeout(scrollCheck, 50);
-                }
-
-                ready = true;
-                detach();
-                fn();
-            })();
-        }
+        fns.push(fn);
     }
 }
