@@ -1,3 +1,5 @@
+/** global: grecaptcha */
+
 'use strict';
 
 function reCaptchaInit() {
