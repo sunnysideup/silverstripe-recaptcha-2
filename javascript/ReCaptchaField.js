@@ -3,42 +3,45 @@
 (function (window, document) {
     'use strict';
 
-    function reCaptchaInit() {
+    function init() {
         var element = document.createElement('script'),
-            target = document.querySelectorAll('script')[0],
-            protocol = 'https:' == document.location.protocol ? 'https' : 'http';
+            target = document.querySelectorAll('script')[0];
         element.type = 'text/javascript';
-        element.src = protocol + '://www.google.com/recaptcha/api.js?onload=reCaptchaOnloadCallback&render=explicit&hl='.concat(window.SS_LOCALE);
+        element.src = httpProtocol() + '://www.google.com/recaptcha/api.js?onload=reCaptchaOnloadCallback&render=explicit&hl='.concat(window.SS_LOCALE);
         target.parentNode.insertBefore(element, target);
     }
 
-    function reCaptchaOnloadCallback() {
+    function httpProtocol() {
+        return 'https:' == document.location.protocol ? 'https' : 'http';
+    }
+
+    function callback() {
         var reCaptcha = document.querySelector('.g-recaptcha');
 
         if (reCaptcha.dataset.size === 'invisible') {
-            reCaptchaForm().addEventListener('submit', reCaptchaFormOnSubmit);
+            form().addEventListener('submit', formOnSubmit);
         }
 
         grecaptcha.render(reCaptcha, reCaptcha.dataset);
     }
 
-    function reCaptchaOnSubmit(token) {
+    function submit(token) {
         document.querySelector('#'.concat(window.ReCaptchaFormId, ' .g-recaptcha-response')).value = token;
-        reCaptchaForm().submit();
+        form().submit();
     }
 
-    function reCaptchaForm() {
+    function form() {
         return document.querySelector('#'.concat(window.ReCaptchaFormId));
     }
 
-    function reCaptchaFormOnSubmit(event) {
+    function formOnSubmit(event) {
         event.preventDefault();
         grecaptcha.execute();
     }
 
-    domReady(reCaptchaInit);
+    domReady(init);
 
-    window.reCaptchaOnloadCallback = reCaptchaOnloadCallback;
-    window.reCaptchaOnSubmit = reCaptchaOnSubmit;
+    window.reCaptchaOnloadCallback = callback;
+    window.reCaptchaOnSubmit = submit;
 })(window, document);
 
