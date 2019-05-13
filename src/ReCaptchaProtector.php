@@ -9,7 +9,7 @@ class ReCaptchaProtector implements SpamProtector
      * Return the Field that we will use in this protector
      * @param string $name
      * @param string $title
-     * @param null $value
+     * @param mixed $value
      * @return ReCaptchaField
      */
     public function getFormField($name = 'ReCaptchaField', $title = 'ReCaptcha', $value = null)

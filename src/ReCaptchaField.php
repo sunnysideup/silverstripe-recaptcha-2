@@ -126,6 +126,7 @@ class ReCaptchaField extends FormField
         }
 
         Requirements::customScript("var SS_LOCALE='" . Locale::getPrimaryLanguage(i18n::get_locale()) . "',ReCaptchaFormId='" . $this->getFormID() . "';");
+        Requirements::javascript('kmedia/silverstripe-recaptcha:javascript/domReady.js');
         Requirements::javascript('kmedia/silverstripe-recaptcha:javascript/ReCaptchaField.js');
 
         return parent::Field($properties);
@@ -146,7 +147,7 @@ class ReCaptchaField extends FormField
         }
 
         if (!function_exists('curl_init')) {
-            user_error('You must enable php-curl to use this field', E_USER_ERROR);
+            user_error('You must enable cURL to use this field', E_USER_ERROR);
             return false;
         }
 
@@ -155,11 +156,25 @@ class ReCaptchaField extends FormField
             . '&remoteip=' . rawurlencode($_SERVER['REMOTE_ADDR']);
         $ch = curl_init($url);
 
+        if ($ch === false) {
+            user_error('An error occurred when initializing cURL.', E_USER_ERROR);
+            return false;
+        }
+
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 
-        $response = json_decode(curl_exec($ch), true);
+        $response = curl_exec($ch);
+
+        if ($response === false) {
+            user_error('An error occurred while cURL was being executed: ' . curl_error($ch), E_USER_ERROR);
+            return false;
+        }
+
+        curl_close($ch);
+
+        $response = json_decode($response, true);
         if (is_array($response)) {
             if (array_key_exists('success', $response) && $response['success'] == false) {
                 $validator->validationError(
