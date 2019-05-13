@@ -1,7 +1,6 @@
 # Silverstripe reCAPTCHA FormField Module
 [![license - bsd 3 clause](https://img.shields.io/:license-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/?branch=master)
-[![Code Intelligence Status](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Build Status](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/badges/build.png?b=master)](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/kMediaGbR/silverstripe-recaptcha/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
