@@ -133,46 +133,13 @@ class ReCaptchaField extends FormField
     public function validate($validator)
     {
         $recaptchaResponse = Controller::curr()->getRequest()->requestVar('g-recaptcha-response');
+        $response = json_decode($this->siteVerify($recaptchaResponse), true);
 
-        if (empty($recaptchaResponse)) {
-            $validator->validationError(
-                $this->name,
-                _t('Kmedia\\ReCaptcha.EMPTY',
-                    'Please answer the captcha, if you do not see the captcha please enable JavaScript.'),
-                'validation'
-            );
-            return false;
-        }
+        return $this->verify($response, $validator);
+    }
 
-        if (!function_exists('curl_init')) {
-            user_error('You must enable cURL to use this field', E_USER_ERROR);
-            return false;
-        }
-
-        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='
-            . $this->secretKey . '&response=' . rawurlencode($recaptchaResponse)
-            . '&remoteip=' . rawurlencode($_SERVER['REMOTE_ADDR']);
-        $ch = curl_init($url);
-
-        if ($ch === false) {
-            user_error('An error occurred when initializing cURL.', E_USER_ERROR);
-            return false;
-        }
-
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-
-        $result = curl_exec($ch);
-
-        if ($result === false) {
-            user_error('An error occurred while cURL was being executed: ' . curl_error($ch), E_USER_ERROR);
-            return false;
-        }
-
-        curl_close($ch);
-
-        $response = json_decode((string)$result, true);
+    private function verify($response, $validator)
+    {
         if (is_array($response)) {
             if (array_key_exists('success', $response) && $response['success'] == false) {
                 $validator->validationError(
@@ -190,5 +157,36 @@ class ReCaptchaField extends FormField
             return false;
         }
         return true;
+    }
+
+    private function siteVerify($token)
+    {
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='
+            . $this->secretKey . '&response=' . rawurlencode($token)
+            . '&remoteip=' . rawurlencode($_SERVER['REMOTE_ADDR']);
+
+        $ch = curl_init();
+
+        if ($ch === false) {
+            user_error('An error occurred when initializing cURL.', E_USER_ERROR);
+            return false;
+        }
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+        ]);
+
+        $result = curl_exec($ch);
+
+        if ($result === false) {
+            user_error('An error occurred while cURL was being executed: ' . curl_error($ch), E_USER_ERROR);
+            return false;
+        }
+
+        curl_close($ch);
+        return (string)$result;
     }
 }
