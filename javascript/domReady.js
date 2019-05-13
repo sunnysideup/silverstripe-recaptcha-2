@@ -2,22 +2,31 @@
 
 function domReady(fn) {
     var fns = [],
-        listener,
-        doc = typeof document === 'object' && document,
-        hack = doc && doc.documentElement.doScroll,
-        domContentLoaded = 'DOMContentLoaded',
-        loaded = doc && (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+        loaded = domLoaded();
 
-    if (!loaded && doc) {
-        doc.addEventListener(domContentLoaded, listener = function () {
-            doc.removeEventListener(domContentLoaded, listener);
-            loaded = 1;
+    domAddEventListener(fns, loaded);
+    domHandleCallback(loaded, fns, fn);
+}
+
+function domLoaded() {
+    return (document.documentElement.doScroll ? /^loaded|^c/ : /^loaded|^i|^c/).test(document.readyState);
+}
+
+function domAddEventListener(fns, loaded) {
+    var listener;
+
+    if (!loaded) {
+        document.addEventListener('DOMContentLoaded', listener = function () {
+            document.removeEventListener('DOMContentLoaded', listener);
+            loaded = true;
             while (listener = fns.shift()) {
                 listener();
             }
         })
     }
+}
 
+function domHandleCallback(loaded, fns, fn) {
     if (loaded) {
         setTimeout(fn, 0);
     } else {
