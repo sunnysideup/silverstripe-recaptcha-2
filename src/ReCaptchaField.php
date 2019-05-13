@@ -165,16 +165,16 @@ class ReCaptchaField extends FormField
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 
-        $response = curl_exec($ch);
+        $result = curl_exec($ch);
 
-        if ($response === false) {
+        if ($result === false) {
             user_error('An error occurred while cURL was being executed: ' . curl_error($ch), E_USER_ERROR);
             return false;
         }
 
         curl_close($ch);
 
-        $response = json_decode($response, true);
+        $response = json_decode($result, true);
         if (is_array($response)) {
             if (array_key_exists('success', $response) && $response['success'] == false) {
                 $validator->validationError(
