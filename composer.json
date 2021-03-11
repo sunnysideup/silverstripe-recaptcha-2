@@ -22,7 +22,7 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "silverstripe/framework": "^4.0",
+        "silverstripe/framework": "^4.5",
         "silverstripe/spamprotection": "~3.0",
         "silverstripe/vendor-plugin": "^1.0"
     },
